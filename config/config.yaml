@@ -1,0 +1,22 @@
+project:
+  name: KIRC Clinical Omics Pipeline
+  cohort: TCGA-KIRC
+  disease: Kidney Renal Clear Cell Carcinoma
+
+paths:
+  data_root: /mnt/e/KIRC_data
+  downloads: /mnt/e/KIRC_data/downloads
+  raw: /mnt/e/KIRC_data/raw
+  interim: /mnt/e/KIRC_data/interim
+  processed: /mnt/e/KIRC_data/processed
+  results: /mnt/e/KIRC_data/results
+
+analysis:
+  minimum_count: 10
+  minimum_samples: 10
+  adjusted_pvalue_threshold: 0.05
+  log2_fold_change_threshold: 1.0
+
+comparison:
+  reference_group: Solid Tissue Normal
+  test_group: Primary Tumor

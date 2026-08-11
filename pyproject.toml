@@ -1,0 +1,23 @@
+[project]
+name = "kirc-clinical-omics-pipeline"
+version = "0.1.0"
+requires-python = ">=3.13"
+dependencies = [
+    "matplotlib>=3.11.1",
+    "numpy>=2.5.1",
+    "pandas>=3.0.5",
+    "plotly>=6.9.0",
+    "pyarrow>=25.0.0",
+    "pydeseq2>=0.5.4",
+    "pyyaml>=6.0.3",
+    "requests>=2.34.2",
+    "scikit-learn>=1.9.0",
+    "scipy>=1.18.0",
+    "statsmodels>=0.14.6",
+    "streamlit>=1.59.1",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+]

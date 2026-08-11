@@ -1,0 +1,27 @@
+# Python environment
+.venv/
+_pycache_/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Environment variables
+.env
+
+# Logs and temporary files
+logs/*.log
+*.tmp
+*.temp
+
+# Local datasets and generated outputs
+data/
+results/
+*.parquet
+*.feather
+
+# Operating system files
+.DS_Store
+Thumbs.db
