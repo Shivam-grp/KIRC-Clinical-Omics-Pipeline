@@ -1,0 +1,30 @@
+project:
+  name: "KIRC Clinical Omics Pipeline"
+  cancer_type: "TCGA-KIRC"
+  description: "Reproducible RNA-seq and DNA methylation multi-omics workflow"
+
+paths:
+  data_root: "/mnt/e/KIRC_data"
+  illumina_450k_manifest: "/mnt/e/KIRC_data/reference/HumanMethylation450_15017482_v1-2.csv"
+
+resources:
+  default_threads: 4
+
+methylation_qc:
+  sample_missing_max_percent: 20
+  probe_missing_max_percent: 10
+
+differential_methylation:
+  fdr: 0.05
+  minimum_absolute_delta_beta: 0.20
+
+differential_expression:
+  fdr: 0.05
+  minimum_absolute_log2fc: 1.0
+
+integration:
+  promoter_regions:
+    - TSS1500
+    - TSS200
+    - "5'UTR"
+    - 1stExon

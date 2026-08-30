@@ -1,0 +1,169 @@
+"""
+TCGA-KIRC Clinical Multi-Omics Pipeline
+
+Reproducible orchestration of:
+14. Methylation matrix + QC
+15. Differential methylation
+16. CpG annotation
+17. RNA-seq × methylation integration
+18. Multi-omics visualisation
+"""
+
+# ============================================================
+# CONFIGURATION
+# ============================================================
+
+DATA = config["paths"]["data_root"].rstrip("/")
+MANIFEST = config["paths"]["illumina_450k_manifest"]
+
+METH = f"{DATA}/processed/methylation_450"
+DM = f"{DATA}/results/differential_methylation"
+ANN = f"{DM}/annotation"
+MULTI = f"{DATA}/results/multiomics_integration"
+FIG = f"{MULTI}/figures"
+
+
+# ============================================================
+# FINAL TARGETS
+# ============================================================
+
+rule all:
+    input:
+        f"{DM}/kirc_differential_methylation.tsv",
+        f"{DM}/kirc_significant_dmps.tsv",
+        f"{ANN}/kirc_significant_dmps_annotated.tsv",
+        f"{ANN}/kirc_gene_methylation_summary.tsv",
+        f"{MULTI}/rna_methylation_integrated.tsv",
+        f"{MULTI}/concordant_epigenetic_candidates.tsv",
+        f"{MULTI}/strict_epigenetic_candidates.tsv",
+        f"{FIG}/rna_methylation_integration_scatter.png",
+        f"{FIG}/top_epigenetic_candidates.png",
+        f"{FIG}/ccrcc_marker_multiomics.png",
+        f"{FIG}/integration_category_counts.png",
+        f"{MULTI}/top_50_multiomics_candidates.tsv"
+
+
+# ============================================================
+# STEP 14 — METHYLATION MATRIX + QC
+# ============================================================
+
+rule methylation_matrix:
+    output:
+        matrix=f"{METH}/kirc_methylation_beta_matrix.npy",
+        probes=f"{METH}/kirc_methylation_probe_ids.tsv",
+        metadata=f"{METH}/kirc_methylation_sample_metadata.tsv",
+        qc=f"{METH}/kirc_methylation_qc.tsv"
+
+    shell:
+        """
+        python scripts/14_build_methylation_matrix.py
+        """
+
+
+# ============================================================
+# STEP 15 — DIFFERENTIAL METHYLATION
+# ============================================================
+
+rule differential_methylation:
+    input:
+        matrix=rules.methylation_matrix.output.matrix,
+        probes=rules.methylation_matrix.output.probes,
+        metadata=rules.methylation_matrix.output.metadata,
+        qc=rules.methylation_matrix.output.qc
+
+    output:
+        results=f"{DM}/kirc_differential_methylation.tsv",
+        significant=f"{DM}/kirc_significant_dmps.tsv",
+        sample_filter=f"{DM}/methylation_sample_filter.tsv",
+        probe_filter=f"{DM}/methylation_probe_filter.tsv"
+
+    params:
+        sample_missing=config["methylation_qc"]["sample_missing_max_percent"],
+        probe_missing=config["methylation_qc"]["probe_missing_max_percent"],
+        fdr=config["differential_methylation"]["fdr"],
+        delta=config["differential_methylation"]["minimum_absolute_delta_beta"]
+
+    shell:
+        """
+        echo "Sample missingness: <= {params.sample_missing}%"
+        echo "Probe missingness: <= {params.probe_missing}%"
+        echo "DMP FDR: {params.fdr}"
+        echo "DMP |delta-beta|: {params.delta}"
+
+        python scripts/15_differential_methylation.py
+        """
+
+
+# ============================================================
+# STEP 16 — CpG / GENE ANNOTATION
+# ============================================================
+
+rule annotate_methylation:
+    input:
+        results=rules.differential_methylation.output.results,
+        significant=rules.differential_methylation.output.significant,
+        manifest=MANIFEST
+
+    output:
+        all_annotated=f"{ANN}/kirc_differential_methylation_annotated.tsv",
+        significant_annotated=f"{ANN}/kirc_significant_dmps_annotated.tsv",
+        gene_links=f"{ANN}/kirc_dmp_gene_links.tsv",
+        gene_summary=f"{ANN}/kirc_gene_methylation_summary.tsv",
+        provenance=f"{ANN}/annotation_provenance.txt"
+
+    shell:
+        """
+        python scripts/16_annotate_methylation.py
+        """
+
+
+# ============================================================
+# STEP 17 — RNA × METHYLATION INTEGRATION
+# ============================================================
+
+rule integrate_multiomics:
+    input:
+        methylation=rules.annotate_methylation.output.significant_annotated
+
+    output:
+        promoter_links=f"{MULTI}/promoter_dmp_gene_links.tsv",
+        promoter_summary=f"{MULTI}/gene_promoter_methylation_summary.tsv",
+        integrated=f"{MULTI}/rna_methylation_integrated.tsv",
+        candidates=f"{MULTI}/concordant_epigenetic_candidates.tsv",
+        strict=f"{MULTI}/strict_epigenetic_candidates.tsv",
+        summary=f"{MULTI}/integration_summary.txt"
+
+    params:
+        rna_fdr=config["differential_expression"]["fdr"],
+        log2fc=config["differential_expression"]["minimum_absolute_log2fc"]
+
+    shell:
+        """
+        echo "RNA FDR threshold: {params.rna_fdr}"
+        echo "RNA |log2FC| threshold: {params.log2fc}"
+
+        python scripts/17_integrate_rna_methylation.py
+        """
+
+
+# ============================================================
+# STEP 18 — MULTI-OMICS VISUALISATION
+# ============================================================
+
+rule multiomics_visualisation:
+    input:
+        integrated=rules.integrate_multiomics.output.integrated,
+        candidates=rules.integrate_multiomics.output.candidates,
+        strict=rules.integrate_multiomics.output.strict
+
+    output:
+        scatter=f"{FIG}/rna_methylation_integration_scatter.png",
+        candidates_plot=f"{FIG}/top_epigenetic_candidates.png",
+        markers=f"{FIG}/ccrcc_marker_multiomics.png",
+        categories=f"{FIG}/integration_category_counts.png",
+        top50=f"{MULTI}/top_50_multiomics_candidates.tsv"
+
+    shell:
+        """
+        python scripts/18_multiomics_visualisation.py
+        """

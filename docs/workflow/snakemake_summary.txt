@@ -1,0 +1,25 @@
+output_file	date	rule	log-file(s)	status	plan
+/mnt/e/KIRC_data/results/differential_methylation/kirc_differential_methylation.tsv	Sun Aug 30 14:48:55 2026	differential_methylation	-	ok	no update
+/mnt/e/KIRC_data/results/differential_methylation/kirc_significant_dmps.tsv	Sun Aug 30 14:48:56 2026	differential_methylation	-	ok	no update
+/mnt/e/KIRC_data/results/differential_methylation/methylation_sample_filter.tsv	Sun Aug 30 14:45:58 2026	differential_methylation	-	ok	no update
+/mnt/e/KIRC_data/results/differential_methylation/methylation_probe_filter.tsv	Sun Aug 30 14:46:13 2026	differential_methylation	-	ok	no update
+/mnt/e/KIRC_data/processed/methylation_450/kirc_methylation_beta_matrix.npy	Sun Aug 30 14:10:40 2026	methylation_matrix	-	ok	no update
+/mnt/e/KIRC_data/processed/methylation_450/kirc_methylation_probe_ids.tsv	Sun Aug 30 11:39:10 2026	methylation_matrix	-	ok	no update
+/mnt/e/KIRC_data/processed/methylation_450/kirc_methylation_sample_metadata.tsv	Sun Aug 30 14:10:32 2026	methylation_matrix	-	ok	no update
+/mnt/e/KIRC_data/processed/methylation_450/kirc_methylation_qc.tsv	Sun Aug 30 14:10:32 2026	methylation_matrix	-	ok	no update
+/mnt/e/KIRC_data/results/differential_methylation/annotation/kirc_differential_methylation_annotated.tsv	Sun Aug 30 15:57:07 2026	annotate_methylation	-	ok	no update
+/mnt/e/KIRC_data/results/differential_methylation/annotation/kirc_significant_dmps_annotated.tsv	Sun Aug 30 15:57:08 2026	annotate_methylation	-	ok	no update
+/mnt/e/KIRC_data/results/differential_methylation/annotation/kirc_dmp_gene_links.tsv	Sun Aug 30 15:57:08 2026	annotate_methylation	-	ok	no update
+/mnt/e/KIRC_data/results/differential_methylation/annotation/kirc_gene_methylation_summary.tsv	Sun Aug 30 15:57:10 2026	annotate_methylation	-	ok	no update
+/mnt/e/KIRC_data/results/differential_methylation/annotation/annotation_provenance.txt	Sun Aug 30 15:57:10 2026	annotate_methylation	-	ok	no update
+/mnt/e/KIRC_data/results/multiomics_integration/promoter_dmp_gene_links.tsv	Sun Aug 30 16:36:03 2026	integrate_multiomics	-	ok	no update
+/mnt/e/KIRC_data/results/multiomics_integration/gene_promoter_methylation_summary.tsv	Sun Aug 30 16:36:06 2026	integrate_multiomics	-	ok	no update
+/mnt/e/KIRC_data/results/multiomics_integration/rna_methylation_integrated.tsv	Sun Aug 30 16:36:06 2026	integrate_multiomics	-	ok	no update
+/mnt/e/KIRC_data/results/multiomics_integration/concordant_epigenetic_candidates.tsv	Sun Aug 30 16:36:06 2026	integrate_multiomics	-	ok	no update
+/mnt/e/KIRC_data/results/multiomics_integration/strict_epigenetic_candidates.tsv	Sun Aug 30 16:36:06 2026	integrate_multiomics	-	ok	no update
+/mnt/e/KIRC_data/results/multiomics_integration/integration_summary.txt	Sun Aug 30 16:36:06 2026	integrate_multiomics	-	ok	no update
+/mnt/e/KIRC_data/results/multiomics_integration/figures/rna_methylation_integration_scatter.png	Sun Aug 30 16:48:53 2026	multiomics_visualisation	-	ok	no update
+/mnt/e/KIRC_data/results/multiomics_integration/figures/top_epigenetic_candidates.png	Sun Aug 30 16:48:54 2026	multiomics_visualisation	-	ok	no update
+/mnt/e/KIRC_data/results/multiomics_integration/figures/ccrcc_marker_multiomics.png	Sun Aug 30 16:48:54 2026	multiomics_visualisation	-	ok	no update
+/mnt/e/KIRC_data/results/multiomics_integration/figures/integration_category_counts.png	Sun Aug 30 16:48:54 2026	multiomics_visualisation	-	ok	no update
+/mnt/e/KIRC_data/results/multiomics_integration/top_50_multiomics_candidates.tsv	Sun Aug 30 16:48:55 2026	multiomics_visualisation	-	ok	no update
