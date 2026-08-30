@@ -25,3 +25,6 @@ results/
 # Operating system files
 .DS_Store
 Thumbs.db
+
+# Snakemake runtime files
+.snakemake/
