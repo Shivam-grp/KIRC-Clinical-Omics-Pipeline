@@ -28,3 +28,7 @@ Thumbs.db
 
 # Snakemake runtime files
 .snakemake/
+*.sif
+*.sif
+*.sif
+.sif

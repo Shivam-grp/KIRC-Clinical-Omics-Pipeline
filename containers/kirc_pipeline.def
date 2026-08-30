@@ -1,0 +1,49 @@
+Bootstrap: docker
+From: python:3.13-slim
+
+%labels
+    Author Shivam
+    Project KIRC-Clinical-Omics-Pipeline
+    Description Reproducible TCGA-KIRC multi-omics bioinformatics environment
+
+%files
+    pyproject.toml /opt/kirc/pyproject.toml
+    uv.lock /opt/kirc/uv.lock
+    scripts /opt/kirc/scripts
+    workflow /opt/kirc/workflow
+    config /opt/kirc/config
+    tests /opt/kirc/tests
+
+%post
+    apt-get update
+
+    apt-get install -y --no-install-recommends \
+        build-essential \
+        ca-certificates \
+        curl \
+        git \
+        graphviz
+
+    rm -rf /var/lib/apt/lists/*
+
+    pip install --no-cache-dir uv
+
+    cd /opt/kirc
+
+    uv sync --frozen
+
+%environment
+    export PATH="/opt/kirc/.venv/bin:$PATH"
+    export PYTHONPATH="/opt/kirc:$PYTHONPATH"
+    export KIRC_PROJECT_ROOT="/opt/kirc"
+
+%runscript
+    cd /opt/kirc
+    exec "$@"
+
+%test
+    export PATH="/opt/kirc/.venv/bin:$PATH"
+
+    python --version
+    snakemake --version
+    pytest --version
