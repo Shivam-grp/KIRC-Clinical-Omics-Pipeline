@@ -1,0 +1,7 @@
+metric	value
+RNA_DE_file	/mnt/e/KIRC_data/results/differential_expression/tumor_vs_normal_deseq2.tsv
+RNA_genes_tested	32835
+significant_RNA_genes	14271
+significant_ATAC_peaks	500
+promoter_proximal_ATAC_genes	382
+shared_RNA_ATAC_genes	83
