@@ -1,3 +1,22 @@
+# KIRC Clinical Multi-Omics Pipeline
+
+*Reproducible cancer bioinformatics portfolio integrating bulk RNA-seq, DNA methylation, single-cell RNA-seq and ATAC-seq in TCGA-KIRC.*
+
+## Portfolio highlights
+
+- Bulk RNA-seq QC, differential expression and pathway interpretation
+- Illumina 450K methylation QC and differential methylation
+- RNA–methylation multi-omics integration
+- Single-cell RNA-seq QC, PCA, UMAP, Leiden clustering and cell-type annotation
+- ATAC-seq chromatin-accessibility analysis
+- RNA–ATAC regulatory integration using GENCODE TSS annotation
+- Snakemake workflow orchestration
+- Apptainer/Singularity containerisation for reproducible HPC execution
+- Automated validation with pytest — 26 tests passing
+- Python, pandas, NumPy, SciPy, scikit-learn, Scanpy, Git and Linux
+
+---
+
 # TCGA-KIRC Clinical Multi-Omics Pipeline
 
 A reproducible Python/Snakemake workflow for integrating *RNA-seq and Illumina 450K DNA methylation data* from TCGA Kidney Renal Clear Cell Carcinoma (TCGA-KIRC).
