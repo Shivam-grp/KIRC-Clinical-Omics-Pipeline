@@ -33,3 +33,5 @@ Thumbs.db
 *.sif
 .sif
 single_cell/processed/*.h5ad
+atac_seq/data/*.zip
+atac_seq/data/kirc/*.txt
